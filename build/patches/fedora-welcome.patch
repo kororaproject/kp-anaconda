@@ -1,0 +1,29 @@
+--- anaconda-17.29/data/liveinst/gnome/fedora-welcome-orig	2012-06-30 09:28:12.534780737 +1000
++++ anaconda-17.29/data/liveinst/gnome/fedora-welcome	2012-06-30 09:28:42.749011491 +1000
+@@ -61,7 +61,7 @@
+                                                 type: Gtk.WindowType.TOPLEVEL,
+                                                 default_width: 600,
+                                                 default_height: 550,
+-                                                title: _("Welcome to Fedora"),
++                                                title: _("Welcome to Kororaa"),
+                                                 window_position: Gtk.WindowPosition.CENTER });
+       this.window.connect('key-press-event', Lang.bind(this,
+           function(w, event) {
+@@ -90,7 +90,7 @@
+                                      spacing: 16 });
+       tryContent.add(new Gtk.Image({ icon_name: 'media-cdrom',
+                                      pixel_size: 256 }));
+-      tryContent.add(makeLabel(_("Try Fedora"), true));
++      tryContent.add(makeLabel(_("Try Kororaa"), true));
+ 
+       let tryButton = new Gtk.Button({ child: tryContent });
+       buttonBox.add(tryButton);
+@@ -108,7 +108,7 @@
+       let installButton = new Gtk.Button({ child: installContent });
+       buttonBox.add(installButton);
+ 
+-      this._label = makeLabel(_("You are currently running Fedora from live media.\nYou can install Fedora now, or choose \"Install to Hard Drive\" in the Activities Overview at any later time."), false);
++      this._label = makeLabel(_("You are currently running Kororaa from live media.\nYou can install Kororaa now, or choose \"Install to Hard Drive\" in the Activities Overview at any later time."), false);
+       mainGrid.add(this._label);
+ 
+       installButton.connect('clicked', Lang.bind(this,
