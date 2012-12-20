@@ -1,0 +1,53 @@
+#!/bin/bash
+
+function build_pre_init {
+  # check for transiflex client otherwise po files won't exist
+  rpm --quiet -q transifex-client
+  if [ ${?} -ne 0 ]
+  then
+    _error "You need the transifex-client and configured transifex account to build anaconda."
+    return 1
+  fi
+}
+
+function build_pre_build {
+  _TARBALL="${KP_NAME}-${KP_VERSION}.tar.bz2"
+
+  if [ ! -f "${WORKING_PACKAGES_DIR}/${KP_NAME}/build/sources/${_TARBALL}" ]
+  then
+    _info "Building anaconda from git ..."
+
+    # jump in the upstream source
+    _pushd "${WORKING_PACKAGES_DIR}/${KP_NAME}/upstream"
+
+    # archive
+    _TMP=$(mktemp --tmpdir -d "anaconda-build.XXXXXX")
+
+    _info "git archive --format tar "${KP_NAME}-${KP_VERSION}-${KP_RELEASE}" | tar -C ${_TMP} -xf -"
+    pwd
+    git archive --format tar "${KP_NAME}-${KP_VERSION}-${KP_RELEASE}" | tar -C ${_TMP} -xf -
+    _popd
+
+    # jump into the temporary directory and build
+    _pushd ${_TMP}
+
+    # build automake files
+    ./autogen.sh
+
+    ./configure
+
+    # build the PO translation files
+    make po-pull
+
+    # build the distributed tarball
+    make dist
+
+    # copy the source tarball to the build directory
+    cp "${_TARBALL}" "${WORKING_PACKAGES_DIR}/${KP_NAME}/build/sources/"
+    _popd
+
+    _info ${_TMP}
+  else
+    _info "Using cached anaconda source ..."
+  fi
+}
