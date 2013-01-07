@@ -1,3 +1,4 @@
 upstream/
 build/anaconda.spec
 build/sources/anaconda*bz2
+build/.tx/
