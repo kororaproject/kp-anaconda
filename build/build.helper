@@ -32,17 +32,18 @@ function build_pre_build {
     _pushd ${_TMP}
 
     # build automake files
-    ./autogen.sh
+    ./autogen.sh || return 1
 
-    ./configure
+    ./configure || return 1
 
     # build the PO translation files
-    make po-pull
+    make po-pull || return 1
 
     # build the distributed tarball
-    make dist
+    make dist || return 1
 
     # copy the source tarball to the build directory
+    _mkdir "${WORKING_PACKAGES_DIR}/${KP_NAME}/build/sources/"
     cp "${_TARBALL}" "${WORKING_PACKAGES_DIR}/${KP_NAME}/build/sources/"
     _popd
 
