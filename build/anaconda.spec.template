@@ -13,7 +13,7 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 # git checkout -b archive-branch anaconda-%{version}-%{release}
 # ./autogen.sh
 # make dist
-Source0: %{name}-%{version}.tar.bz2
+Source0: http://pkgs.fedoraproject.org/repo/pkgs/anaconda/%{name}-%{version}.tar.bz2/71a3953b7c7053713f45d83f6e7c60d1/%{name}-%{version}.tar.bz2
 %%KP_PATCHES%%
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
