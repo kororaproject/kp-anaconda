@@ -8,7 +8,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: %%KP_VERSION%%
+Version: 18.37.11
 Release: 1%{?dist}.1
 License: GPLv2+
 Group:   Applications/System
