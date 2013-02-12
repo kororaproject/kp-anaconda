@@ -9,7 +9,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 18.37.11
-Release: 1%{?dist}.1
+Release: 1%{?dist}.2
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -226,6 +226,8 @@ runtime on NFS/HTTP/FTP servers or local disks.
 
 %prep
 %setup -q
+#convert Fedora name to Kororaa.
+find . -name *.po -print0 | xargs -0 sed -i 's/Fedora/Korora/g'
 sed -i 's|Fedora|Korora|g' data/liveinst/gnome/fedora-welcome.desktop*
 cp -f %{SOURCE1} data/liveinst/gnome/
 %%KP_PATCHES_APPLY%%
