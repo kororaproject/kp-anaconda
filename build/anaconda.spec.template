@@ -3,13 +3,15 @@
 # v18.40
 #%define commit 749c1f9c6419e83640bf62a3ca71f6b3
 # v18.37.11
-%define commit 71a3953b7c7053713f45d83f6e7c60d1
+#%define commit 71a3953b7c7053713f45d83f6e7c60d1
+# v18.37.12
+%define commit f15efeb0e12198fff76cec40b4605434
 %define livearches %{ix86} x86_64 ppc ppc64
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 18.37.11
-Release: 1%{?dist}.2
+Version: 18.37.12
+Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -314,6 +316,29 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/lib/dracut/modules.d/80%{name}/*
 
 %changelog
+* Fri Feb 08 2013 Brian C. Lane <bcl@redhat.com> - 18.37.12-1
+- Add --dirinstall command (bcl)
+- Add mountOnly to turnOnFilesystems (bcl)
+
+* Mon Jan 07 2013 Brian C. Lane <bcl@redhat.com> - 18.37.11-1
+- Fix Quit button in standalone network spoke (#892120) (rvykydal)
+- Force disk selection for interactive installs. (#888293) (cherry picked from
+  commit 91fea0af242760e0ad83c1f467993ca091098b63) (dlehman)
+- Fix completeness check for md fwraid arrays. (#892621) (dlehman)
+- Fix handling of failure to create a new container. (#892046) (dlehman)
+- Do not lightbox the Add Mountpoint dialog (#875291). (clumens)
+- Try fallback if none exactly matching language is found (#891487) (vpodzime)
+
+* Fri Jan 04 2013 Brian C. Lane <bcl@redhat.com> - 18.37.10-1
+- Only skip welcome screen for ks installs (#891755) (bcl)
+- protect getDirSize from vanishing files (#891759) (bcl)
+- start vnc without ip address (#832510) (bcl)
+
+* Thu Jan 03 2013 Brian C. Lane <bcl@redhat.com> - 18.37.9-1
+- Update physical device's sysfs path for btrfs (sub)volumes. (#891443)
+  (dlehman)
+- Raise DeviceError instead of ValueError from device ctor. (#888089) (dlehman)
+
 * Fri Dec 21 2012 Brian C. Lane <bcl@redhat.com> - 18.37.8-1
 - hook up help window close button (#889570) (cherry picked from commit
   128aa94a4dabfde0e7d3b14ddcec6b88a9308b08) (bcl)
