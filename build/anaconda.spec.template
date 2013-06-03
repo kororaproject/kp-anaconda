@@ -1,11 +1,13 @@
 # v19.30
-%define commit 94925a365386f6ced9f66cd304309815
+#%define commit 94925a365386f6ced9f66cd304309815
+# v19.30.1
+%define commit 80f907a58c0ec127642ddbefa26080f0
 %define livearches %{ix86} x86_64 ppc ppc64
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 19.31
-Release: 1%{?dist}
+Version: 19.30.1
+Release: 1%{?dist}.1
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -26,7 +28,7 @@ Source1: install-button.png
 %define intltoolver 0.31.2-3
 %define libnlver 1.0
 %define pykickstartver 1.99.30
-%define yumver 3.4.3-32
+%define yumver 3.4.3-91
 %define partedver 1.8.1
 %define pypartedver 2.5-2
 %define pythonpyblockver 0.45
@@ -262,7 +264,10 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
-* Wed May 22 2013 Brian C. Lane <bcl@redhat.com> - 19.30-1
+* Wed May 29 2013 Brian C. Lane <bcl@redhat.com> - 19.30.1-1
+-  ()
+
+* Thu May 23 2013 Brian C. Lane <bcl@redhat.com> - 19.30-1
 - Fix software selection in text UI. (#965974) (sbueno+anaconda)
 - Don't call _update_summary from within _add_disk_overview. (clumens)
 - getDisks should not return a list that has duplicates in it. (clumens)
