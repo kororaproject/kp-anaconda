@@ -3,12 +3,14 @@
 # v19.30.1
 #%define commit 80f907a58c0ec127642ddbefa26080f0
 # v19.30.7
-%define commit b7e9e9a7f3645fe9d6156da1279ddbac
+#%define commit b7e9e9a7f3645fe9d6156da1279ddbac
+# v19.30.9
+%define commit fd41c360f978b0ccac40f9b29316aaea
 %define livearches %{ix86} x86_64 ppc ppc64
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 19.30.7
+Version: 19.30.9
 Release: 1%{?dist}.1
 License: GPLv2+
 Group:   Applications/System
@@ -269,6 +271,25 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Wed Jun 19 2013 Brian C. Lane <bcl@redhat.com> - 19.30.9-1
+- Continue from the hub if there are no spokes (vpodzime)
+- Make the firstboot --reconfig option work (vpodzime)
+- Use nice names for environment in TUI software spoke (#971304)
+  (sbueno+anaconda)
+- Add option to install from CD/DVD in text UI. (#971191) (sbueno+anaconda)
+- write_config_console function for extlinux to write out serial console boot
+  arguments (#974643) (dennis)
+- Encode timezone from GeoIP as UTF-8 string (#975159) (mkolman)
+- Network spoke: improve Add bond/vlan device dialog behaviour (#924381)
+  (rvykydal)
+- Unset the 'seen' flag if values are changed in the UI (#971050) (vpodzime)
+- Do not refer to kickstart in text rootpw spoke (vpodzime)
+
+* Mon Jun 17 2013 Brian C. Lane <bcl@redhat.com> - 19.30.8-1
+- Revert "Revert "Network spoke: add secret agent (static wep and wpa)"" (bcl)
+- The delete key shouldn't always delete a mountpoint (#969197, #970185).
+  (clumens)
+
 * Fri Jun 14 2013 Brian C. Lane <bcl@redhat.com> - 19.30.7-1
 - Update Raid to use F19_Raid. (#974689) (dlehman)
 - Don't use any grub theme by default. (pjones)
