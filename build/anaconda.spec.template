@@ -12,6 +12,7 @@ Summary: Graphical system installer
 Name:    anaconda
 Version: 19.30.9
 Release: 1%{?dist}.1
+Epoch:   1
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -193,6 +194,12 @@ runtime on NFS/HTTP/FTP servers or local disks.
 %setup -q
 #convert Fedora name to Kororaa.
 find . -name *.po -print0 | xargs -0 sed -i 's/Fedora/Korora/g'
+cp po/en_{GB,AU}.po
+sed -i s/en_GB/en_AU/g po/en_AU.po
+sed -i s/United\ Kingdom/Australia/g po/en_AU.po
+sed -i s/en_GB/en_AU\ en_GB/g po/LINGUAS
+msgfmt -c --statistics -o po/en_AU.gmo po/en_AU.po
+touch po/POTFILES.in
 sed -i 's|Fedora|Korora|g' data/liveinst/gnome/fedora-welcome.desktop*
 cp -f %{SOURCE1} data/liveinst/gnome/
 %%KP_PATCHES_APPLY%%
