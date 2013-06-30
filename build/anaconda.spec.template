@@ -5,13 +5,15 @@
 # v19.30.7
 #%define commit b7e9e9a7f3645fe9d6156da1279ddbac
 # v19.30.9
-%define commit fd41c360f978b0ccac40f9b29316aaea
+#%define commit 2311ba7f84e44723d4400a169f21304d
+# v19.30.13
+%define commit 2311ba7f84e44723d4400a169f21304d
 %define livearches %{ix86} x86_64 ppc ppc64
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 19.30.9
-Release: 1%{?dist}.5
+Version: 19.30.13
+Release: 1%{?dist}
 Epoch:   1
 License: GPLv2+
 Group:   Applications/System
@@ -19,7 +21,7 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 
 # To generate Source0 do:
 # git clone http://git.fedorahosted.org/git/anaconda.git
-# git checkout -b archive-branch anaconda-%{version}-%{release}
+# git checkout -b archive-branch anaconda-%%{version}-%%{release}
 # ./autogen.sh
 # make dist
 Source0: http://pkgs.fedoraproject.org/repo/pkgs/anaconda/%{name}-%{version}.tar.bz2/%{commit}/%{name}-%{version}.tar.bz2
@@ -304,6 +306,25 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Thu Jun 27 2013 Brian C. Lane <bcl@redhat.com> - 19.30.13-1
+- Do not preselect the environment if using kickstart packages (#978852)
+  (vpodzime)
+- Skip network.execute for dirInstall (cherry picked from commit
+  e073327df9ed6a650884bac95db71c3e04ace0d7) (bcl)
+
+* Tue Jun 25 2013 Brian C. Lane <bcl@redhat.com> - 19.30.12-1
+- Clear the list of packages on environment change (#977715) (vpodzime)
+
+* Mon Jun 24 2013 Brian C. Lane <bcl@redhat.com> - 19.30.11-1
+- Convert escaped spaces on cmdline to _ (#874381) (bcl)
+
+* Mon Jun 24 2013 Brian C. Lane <bcl@redhat.com> - 19.30.10-1
+- Translate None for LVM RAID selection (#974801) (bcl)
+- Add a way to validate unmodified preexisting stage1 devices.
+  (#974543,#973355) (dlehman)
+- Fix issue where default DE not actually installed in TUI (#972592)
+  (sbueno+anaconda)
+
 * Wed Jun 19 2013 Brian C. Lane <bcl@redhat.com> - 19.30.9-1
 - Continue from the hub if there are no spokes (vpodzime)
 - Make the firstboot --reconfig option work (vpodzime)
