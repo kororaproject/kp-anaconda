@@ -11,7 +11,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 19.30.9
-Release: 1%{?dist}.3
+Release: 1%{?dist}.5
 Epoch:   1
 License: GPLv2+
 Group:   Applications/System
@@ -195,15 +195,35 @@ runtime on NFS/HTTP/FTP servers or local disks.
 
 %prep
 %setup -q
-#convert Fedora name to Kororaa.
+#convert Fedora name to Korora.
 find . -name *.po -print0 | xargs -0 sed -i 's/Fedora/Korora/g'
-cp po/en_{GB,AU}.po
-sed -i s/en_GB/en_AU/g po/en_AU.po
-sed -i s/United\ Kingdom/Australia/g po/en_AU.po
-sed -i s/en_GB/en_AU\ en_GB/g po/LINGUAS
-msgfmt -c --statistics -o po/en_AU.gmo po/en_AU.po
-touch po/POTFILES.in
 sed -i 's|Fedora|Korora|g' data/liveinst/gnome/fedora-welcome.desktop*
+
+#British English based locales
+for x in AG AU BW DK HK IE IN NG NZ SG ZA ZM ZW
+do
+  cp po/en_GB.po po/en_${x}.po
+  sed -i s/en_GB/en_${x}/g po/en_${x}.po
+#  sed -i s/United\ Kingdom/Australia/g po/en_AU.po
+  sed -i s/en_GB/en_${x}\ en_GB/g po/LINGUAS
+  msgfmt -c --statistics -o po/en_${x}.gmo po/en_${x}.po
+done
+
+#US English based locales
+for x in CA PH 
+do
+  cp po/anaconda.pot po/en_${x}.po
+  sed -i /^#,\ fuzzy/d po/en_${x}.po
+  sed -i s/CHARSET/UTF-8/g po/en_${x}.po
+  sed -i s/INTEGER/2/g po/en_${x}.po
+  sed -i s/EXPRESSION/\(n\ \!=\ 1\)/g po/en_${x}.po
+  sed -i s/^\"Project-Id-Version:.*/\"Project-Id-Version:\ Anaconda\\\\n\"/g po/en_${x}.po
+  sed -i s/^\"Language:.*/\"Language:\ en_${x}\\\\n\"/g po/en_${x}.po
+  sed -i s/en_GB/en_${x}\ en_GB/g po/LINGUAS
+  msgfmt -c --statistics -o po/en_${x}.gmo po/en_${x}.po
+done  
+touch po/POTFILES.in
+
 cp -f %{SOURCE1} data/liveinst/gnome/
 %%KP_PATCHES_APPLY%%
 
