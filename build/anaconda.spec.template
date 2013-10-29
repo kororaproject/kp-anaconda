@@ -1,12 +1,14 @@
 # v19.30.13
 #%define commit 2311ba7f84e44723d4400a169f21304d
 # v20.21
-%define commit 5d3bbeeb13b443aba2c7dbe8719a3677
+#%define commit 5d3bbeeb13b443aba2c7dbe8719a3677
+# v20.25.4
+%define commit e5a650c5e71366387a0e31bd8652ef30
 %define livearches %{ix86} x86_64 ppc ppc64
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 20.21
+Version: 20.25.4
 Release: 1%{?dist}
 Epoch:   1
 License: GPLv2+
@@ -28,7 +30,7 @@ Source1: install-button.png
 %define gconfversion 2.28.1
 %define intltoolver 0.31.2-3
 %define libnlver 1.0
-%define pykickstartver 1.99.41
+%define pykickstartver 1.99.42
 %define yumver 3.4.3-91
 %define partedver 1.8.1
 %define pypartedver 2.5-2
@@ -38,10 +40,10 @@ Source1: install-button.png
 %define yumutilsver 1.1.11-3
 %define mehver 0.23-1
 %define sckeyboardver 1.3.1
-%define firewalldver 0.2.9-1
+%define firewalldver 0.3.5-1
 %define pythonurlgrabberver 3.9.1-5
 %define utillinuxver 2.15.1
-%define dracutver 024-25
+%define dracutver 034-7
 %define isomd5sum 1.0.10
 %define fcoeutilsver 1.0.12-3.20100323git
 %define iscsiver 6.2.0.870-3
@@ -86,9 +88,9 @@ BuildRequires: desktop-file-utils
 BuildRequires: s390utils-devel
 %endif
 
-Requires: anaconda-widgets = %{version}-%{release}
+Requires: anaconda-widgets >= %{version}-%{release}
 Requires: dnf
-Requires: python-blivet >= 0.18
+Requires: python-blivet >= 0.23.1
 Requires: gnome-icon-theme-symbolic
 Requires: python-meh >= %{mehver}
 Requires: libreport-anaconda >= 2.0.21-1
@@ -297,6 +299,125 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Fri Oct 25 2013 Brian C. Lane <bcl@redhat.com> - 20.25.4-1
+- Reset _proxyChange when a change is triggered (bcl)
+- Setup No Update checkbox correctly (#1016801) (bcl)
+- Fall back to closest mirror in source (#1016801) (bcl)
+- anaconda-dracut: fix ks failure with hd:<dev>:some/path.ks (wwoods)
+- Make sure lower bound for resize is applied. (#986575) (dlehman)
+- Use devicetree to resolve device specs in kickstart. (#1022206) (dlehman)
+- Disregard raid level combo when it isn't applicable. (#1022203) (dlehman)
+- Mountpoint is an attr of the format, not the device. (#892747) (dlehman)
+- Add bootloader execute before autopart (#1021258) (bcl)
+- Do error checking of repository names on "Installation Source" screen.
+  (amulhern)
+- Avoid configure-event loops. (#1021511) (dshea)
+
+* Wed Oct 23 2013 Brian C. Lane <bcl@redhat.com> - 20.25.3-1
+- remove signal disconnect (#996899) (bcl)
+- Always use decimal notation for Size specs (dshea)
+- Use more general status for installations from media (#1017703) (vpodzime)
+
+* Mon Oct 21 2013 Brian C. Lane <bcl@redhat.com> - 20.25.2-1
+- Adds additional debug logging to yumpayload.py. (amulhern)
+- Handle invalid JSON in geoloc (#1021410) (dshea)
+- Revert "Only prompt for LUKS password if the user has chosen to configure
+  automatically." (amulhern)
+- Reset checks on both password fields. (#1020580) (dshea)
+- Fix swaps added to fstab for noformat (gene)
+- Don't update hub's continue button and label for every spoke (#1020373)
+  (vpodzime)
+- BootLoaderError should not reset storage (#1019541) (bcl)
+- Only prompt for LUKS password if the user has chosen to configure
+  automatically. (amulhern)
+- network gui spoke: use GDBus to obtain list of settings (#1018467) (rvykydal)
+- Fix liveinst to work with livemedia-creator (#1009711) (bcl)
+
+* Wed Oct 16 2013 Brian C. Lane <bcl@redhat.com> - 20.25.1-1
+- New transifex branch for f20 (bcl)
+- Fix python-blivet buildrequires for new f20-branch version. (dlehman)
+- Save mountpoints specified for existing btrfs volumes. (#892747) (dlehman)
+- BTRFS cannot hold swap, no need to care about fstab swaps (vpodzime)
+- Fix the alignment of the Network Time switch (#1019301) (dshea)
+- Tell blivet which swaps should appear in the fstab (#1011391) (vpodzime)
+- Put only newly created or reformated swaps to the new root (vpodzime)
+- Make code to get new devices reusable as property (vpodzime)
+- Grab journal only from the last boot (vpodzime)
+- DNFPayload: allow enable/disable calls for repos that do not exist. (ales)
+- network: look for device settings also based on DEVICE value (#1017788)
+  (rvykydal)
+- Add shell spoke to s390x installations (vpodzime)
+- Put TUI spokes in common categories (vpodzime)
+- MountpointSelector is a widget, set its property properly (#1013612)
+  (vpodzime)
+- Include the journal log on installed system (bcl)
+- DNFPayload: error handling and logging cleanups. (ales)
+- DNFPayload: reset the transaction goal on new package selection check. (ales)
+- DNFPayload: implement environmentGroups() (ales)
+- Some partition scheme is always selected (#1017435) (vpodzime)
+
+* Fri Oct 11 2013 Brian C. Lane <bcl@redhat.com> - 20.25-1
+- Don't use g_object_set on initialized objects. (dshea)
+- Remove the "other" tab in the network spoke. (dshea)
+- Fix duplicated id in custom.glade (dshea)
+- Correctly generate rescue initrd (#1013087) (bcl)
+- Refresh swap suggestion once we know which disks to use (vpodzime)
+- Initialize the kickstart install method (#1017614) (dshea)
+- Use correct format for raise in kickstart.py (bcl)
+- Add install-requires target to the Anaconda makefile (mkolman)
+- fix luksformat references (#1014493) (bcl)
+- kickstart: check for correct format (#1014545) (bcl)
+- Add checks for unexpanded macros. (dshea)
+- UIScreen doesn't necessarily have the ready property (vpodzime)
+- Print long widgets in a nice way (vpodzime)
+- Consider errno 5 I/O errors hardware faults (vpodzime)
+- Install kernel-lpae if supported (#1013015) (vpodzime)
+- Bump firewalld version (mkolman)
+
+* Wed Oct 09 2013 Brian C. Lane <bcl@redhat.com> - 20.24-1
+- Clear bootDisk and bootloader stage info on errors (#1013482) (bcl)
+- Catch BootLoaderError when setting up bootloader (#1013474) (bcl)
+- Fix an incorrect formatting string in makeupdates. (clumens)
+- network: remove function we don't need anymore (rvykydal)
+- Don't translate constant strings. (dshea)
+- Take into account disk space when calculating swap suggestion (#1016673)
+  (vpodzime)
+- DNFPayload: adapt to DNF change c3de85d6 of Base.install() error reporting.
+  (ales)
+- DNFPayload: the new libcomps makes env.option_ids a list of GroupID objects.
+  (ales)
+- Fix warning message when package version is not found in Koji (mkolman)
+
+* Tue Oct 08 2013 Brian C. Lane <bcl@redhat.com> - 20.23-1
+- Use Unicode in the TUI buffer strings (#1015620) (dshea)
+- DNFPayload: install DNF itself. (ales)
+- DNFPayload: direct conf.persistdir to the sysimage. (ales)
+- Add a tooltip to the container combobox (#975801) (bcl)
+- Use different colors for different message types. (dshea)
+- Exit on exception in the askVNC spoke (#962804) (dshea)
+- Don't skip the strength check if overriding a kickstart password (dshea)
+- Allow password spoke to be exited without password (#1004931) (dshea)
+- Re-check the password strength when the username changes (dshea)
+- Only call pwquality once per password. (dshea)
+- Use GUICheck checks for the root password strength (dshea)
+- Use constants for password check failure messages (dshea)
+- Use a constant to indicate GUICheck success (dshea)
+- Remove a redundant error property from UserSpoke (dshea)
+- Fix the usages of PWQError. (#1014405) (dshea)
+- Fix usage of GtkLevelBar in glade. (dshea)
+- Clean up callbacks in the user spoke. (dshea)
+- Removed an untrue portion of a doc comment (dshea)
+- Support for removing services from firewall needs newer PyKickstart (mkolman)
+- Add support for removing services from the firewall (#957809) (mkolman)
+
+* Fri Oct 04 2013 Brian C. Lane <bcl@redhat.com> - 20.22-1
+- Only encrypt the TUI user password once (#1015220) (dshea)
+- Don't try to collect removed modules (vpodzime)
+- Moved the NFS nolock option into Payload._setupNFS (dshea)
+- Grab journalctl logs if there is no /tmp/syslog (vpodzime)
+- Pass layout and variant in specific format to Gkbd (#1011155) (vpodzime)
+- Translate the "Quit" string at the end of liveinst. (dshea)
+
 * Fri Sep 27 2013 Brian C. Lane <bcl@redhat.com> - 20.21-1
 - Remove another reference to log_picker. (clumens)
 - Turn spinner back on for configuration (bcl)
