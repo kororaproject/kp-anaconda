@@ -5,7 +5,9 @@
 # v20.25.4
 #%define commit e5a650c5e71366387a0e31bd8652ef30
 # v20.25.5
-%define commit b80522277ccfa52cceb457268c5963c2
+#%define commit b80522277ccfa52cceb457268c5963c2
+# v20.25.6
+%define commit 9f7feb839f80367b9c6b6815720fa1ad
 %define livearches %{ix86} x86_64 ppc ppc64
 
 Summary: Graphical system installer
