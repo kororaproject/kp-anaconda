@@ -10,7 +10,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 20.25.5
+Version: 20.25.6
 Release: 1%{?dist}
 Epoch:   1
 License: GPLv2+
@@ -90,7 +90,7 @@ BuildRequires: desktop-file-utils
 BuildRequires: s390utils-devel
 %endif
 
-Requires: anaconda-widgets >= %{version}-%{release}
+Requires: anaconda-widgets = %{version}-%{release}
 Requires: dnf
 Requires: python-blivet >= 0.23.3
 Requires: gnome-icon-theme-symbolic
@@ -198,31 +198,36 @@ runtime on NFS/HTTP/FTP servers or local disks.
 find . -name *.po -print0 | xargs -0 sed -i 's/Fedora/Korora/g'
 sed -i 's|Fedora|Korora|g' data/liveinst/gnome/fedora-welcome.desktop*
 
-#British English based locales
-for x in AG AU BW DK HK IE IN NG NZ SG ZA ZM ZW
-do
-  cp po/en_GB.po po/en_${x}.po
-  sed -i s/en_GB/en_${x}/g po/en_${x}.po
-#  sed -i s/United\ Kingdom/Australia/g po/en_AU.po
-  sed -i s/en_GB/en_${x}\ en_GB/g po/LINGUAS
-  msgfmt -c --statistics -o po/en_${x}.gmo po/en_${x}.po
-done
+mv ./pyanaconda/installclasses/fedora.py ./pyanaconda/installclasses/korora.py
+sed -i s/fedora/korora/g ./pyanaconda/installclasses/korora.py
+sed -i s/Fedora/Korora/g ./pyanaconda/installclasses/korora.py
 
-#US English based locales
-for x in CA PH 
-do
-  cp po/anaconda.pot po/en_${x}.po
-  sed -i /^#,\ fuzzy/d po/en_${x}.po
-  sed -i s/CHARSET/UTF-8/g po/en_${x}.po
-  sed -i s/INTEGER/2/g po/en_${x}.po
-  sed -i s/EXPRESSION/\(n\ \!=\ 1\)/g po/en_${x}.po
-  sed -i s/^\"Project-Id-Version:.*/\"Project-Id-Version:\ Anaconda\\\\n\"/g po/en_${x}.po
-  sed -i s/^\"Language:.*/\"Language:\ en_${x}\\\\n\"/g po/en_${x}.po
-  sed -i s/en_GB/en_${x}\ en_GB/g po/LINGUAS
-  msgfmt -c --statistics -o po/en_${x}.gmo po/en_${x}.po
-done  
-touch po/POTFILES.in
-
+# Locales hack isn't needed now with new anaconda in 20
+##British English based locales
+#for x in AG AU BW DK HK IE IN NG NZ SG ZA ZM ZW
+#do
+#  cp po/en_GB.po po/en_${x}.po
+#  sed -i s/en_GB/en_${x}/g po/en_${x}.po
+##  sed -i s/United\ Kingdom/Australia/g po/en_AU.po
+#  sed -i s/en_GB/en_${x}\ en_GB/g po/LINGUAS
+#  msgfmt -c --statistics -o po/en_${x}.gmo po/en_${x}.po
+#done
+#
+##US English based locales
+#for x in CA PH 
+#do
+#  cp po/anaconda.pot po/en_${x}.po
+#  sed -i /^#,\ fuzzy/d po/en_${x}.po
+#  sed -i s/CHARSET/UTF-8/g po/en_${x}.po
+#  sed -i s/INTEGER/2/g po/en_${x}.po
+#  sed -i s/EXPRESSION/\(n\ \!=\ 1\)/g po/en_${x}.po
+#  sed -i s/^\"Project-Id-Version:.*/\"Project-Id-Version:\ Anaconda\\\\n\"/g po/en_${x}.po
+#  sed -i s/^\"Language:.*/\"Language:\ en_${x}\\\\n\"/g po/en_${x}.po
+#  sed -i s/en_GB/en_${x}\ en_GB/g po/LINGUAS
+#  msgfmt -c --statistics -o po/en_${x}.gmo po/en_${x}.po
+#done  
+#touch po/POTFILES.in
+#
 cp -f %{SOURCE1} data/liveinst/gnome/
 %%KP_PATCHES_APPLY%%
 
@@ -301,6 +306,16 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Fri Nov 01 2013 Brian C. Lane <bcl@redhat.com> - 20.25.6-1
+- Send the continue click after the queue is empty (#1025347) (bcl)
+- No longer use summary screen visit to decide whether bootloader has been
+  configured (#1025802) (amulhern)
+- Remove the bootloader line from the interactive kickstart file (#1025802)
+  (amulhern)
+- Set bootloader default location to mbr in constructor (#1025802) (amulhern)
+- Fix kickstart block device resolution. (#1022206) (dlehman)
+- Specify query territory when getting language native name (vpodzime)
+
 * Wed Oct 30 2013 Brian C. Lane <bcl@redhat.com> - 20.25.5-1
 - Fix up a couple more pylint errors. (clumens)
 - Add check for Linux HFS+ ESP on Mac (#1010495) (bcl)
