@@ -9,12 +9,14 @@
 # v20.25.6
 #%define commit 9f7feb839f80367b9c6b6815720fa1ad
 # v20.25.8
-%define commit 1f123e01aa38a039c1879dd75de0c5c0
+#%define commit 1f123e01aa38a039c1879dd75de0c5c0
+# v20.25.15
+%define commit 5ebf165c375aac5e19cf77eb42c3d4c4
 %define livearches %{ix86} x86_64 ppc ppc64
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 20.25.8
+Version: 20.25.15
 Release: 1%{?dist}
 Epoch:   1
 License: GPLv2+
@@ -95,8 +97,8 @@ BuildRequires: s390utils-devel
 %endif
 
 Requires: anaconda-widgets = %{version}-%{release}
-Requires: dnf >= 0.4.7
-Requires: python-blivet >= 0.23.5
+Requires: dnf >= 0.4.8
+Requires: python-blivet >= 0.23.6
 Requires: gnome-icon-theme-symbolic
 Requires: python-meh >= %{mehver}
 Requires: libreport-anaconda >= 2.0.21-1
@@ -211,7 +213,7 @@ cp -f %{SOURCE1} data/liveinst/gnome/
 %%KP_PATCHES_APPLY%%
 
 # Replace "Quit" with "Done" for finished install
-sed -i s/self.continueButton.set_label\(\"_Quit\"\)/self.continueButton.set_label\(\"_Done\"\)/g pyanaconda/ui/gui/hubs/progress.py
+sed -i s/self.continueButton.set_label\(_\(\"_Quit\"\)\)/self.continueButton.set_label\(\"_Done\"\)/g pyanaconda/ui/gui/hubs/progress.py
 
 %build
 %configure --disable-static \
@@ -282,6 +284,64 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Wed Dec 11 2013 Brian C. Lane <bcl@redhat.com> - 20.25.15-1
+- Fix selector device matching for unallocated partitions. (#1039292) (dlehman)
+- Do not schedule resize actions for non-resizing requests (#1039491)
+  (vpodzime)
+- Use ceil for minSize in resize dialog (#1040012) (bcl)
+- Use integer numbers of megabytes in the Reclaim dialog (#1040012) (vpodzime)
+- Don't encrypt device if container is encrypted (bcl)
+- Disable tmpfs in the GUI (#1039511) (mkolman)
+- Don't crash on NTP lookup without network (#1026079) (mkolman)
+- Make sure url and mirrorlist are not set at once (#1026834) (mkolman)
+- if rootfs is btrfs, add rootflags=subvol to kernel parameters (gene)
+
+* Wed Dec 04 2013 Brian C. Lane <bcl@redhat.com> - 20.25.14-1
+- Handle cancelation of device resize in the custom spoke. (#1027947) (dlehman)
+- Disallow /boot on lvm until grub2 fully supports it. (#1036705) (dlehman)
+- Disallow /boot on btrfs subvolume until grubby supports it. (#864198)
+  (dlehman)
+- Fix AttributeError in TUI (#1037626) (mkolman)
+- New Version - 20.25.13 (bcl)
+
+* Mon Dec 02 2013 Brian C. Lane <bcl@redhat.com> - 20.25.13-1
+- Don't try to investigate empty string for unicode chars (#1035799) (vpodzime)
+- Do not write out the vconsole.keymap boot option (#1035316) (vpodzime)
+
+* Wed Nov 27 2013 Brian C. Lane <bcl@redhat.com> - 20.25.12-1
+- clear software environment (#1029536) (bcl)
+- Update source on errors (#1030997) (bcl)
+- Round float values coming from the Gtk stack (#1013586) (vpodzime)
+- Generate missing machine-id (bcl)
+- Fix problems reported by pylint. (dshea)
+- Add HDD ISO support for TUI (#1000327) (mkolman)
+
+* Mon Nov 25 2013 Brian C. Lane <bcl@redhat.com> - 20.25.11-1
+- Handle non-leaf btrfs volumes with mountpoints. (#1016959) (dlehman)
+- Use en_spec for blivet Size spec strings with constant components. (#1029616)
+  (dshea)
+- Fix spoke sorting issues in text-mode. (#929177) (sbueno+anaconda)
+- DNFPayload: tweak to the API changes in dnf-0.4.8 (ales)
+- Don't use cached packages with different release id (mkolman)
+
+* Fri Nov 22 2013 Brian C. Lane <bcl@redhat.com> - 20.25.10-1
+- Remove base_repo cache (#1011555) (bcl)
+- Make _yum.preconf setup atomic (#1028245) (bcl)
+- Remove threading from getBaseRepo handling (#1011555) (bcl)
+- tui: show Processing while source is busy (bcl)
+- tui: wait for threads before entering source and software (#1032823) (bcl)
+- clear errors when metadata is ok in tui source spoke (#1006570) (bcl)
+
+* Wed Nov 20 2013 Brian C. Lane <bcl@redhat.com> - 20.25.9-1
+- Fix geolocation on live installs (mkolman)
+- Use timing decorator for more actions (vpodzime)
+- A nice decorator making Anaconda's GUI more responsive (#1032026) (vpodzime)
+- Short-circuit layouts matching (vpodzime)
+- Remove the unused flags import from installclass.py. (clumens)
+- Do yum lock logging only with inst.debug or loglevel=debug (vpodzime)
+- Don't panic on installclasses failing with inst.debug (vpodzime)
+- Make thread manager operations atomic (#1029898) (mkolman)
+
 * Fri Nov 15 2013 Brian C. Lane <bcl@redhat.com> - 20.25.8-1
 - Pass biosdevname boot option to installed system (#1023609) (rvykydal)
 - Enforce upper bound for resize. (#1027947) (dlehman)
