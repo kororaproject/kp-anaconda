@@ -17,7 +17,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 20.25.15
-Release: 1%{?dist}
+Release: 1%{?dist}.1
 Epoch:   1
 License: GPLv2+
 Group:   Applications/System
@@ -96,7 +96,7 @@ BuildRequires: desktop-file-utils
 BuildRequires: s390utils-devel
 %endif
 
-Requires: anaconda-widgets = %{version}-%{release}
+Requires: anaconda-widgets = 1:%{version}-%{release}
 Requires: dnf >= 0.4.8
 Requires: python-blivet >= 0.23.6
 Requires: gnome-icon-theme-symbolic
