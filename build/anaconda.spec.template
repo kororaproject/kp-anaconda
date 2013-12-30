@@ -17,7 +17,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 20.25.15
-Release: 1%{?dist}.1
+Release: 1%{?dist}.2
 Epoch:   1
 License: GPLv2+
 Group:   Applications/System
@@ -208,6 +208,7 @@ sed -i 's|Fedora|Korora|g' data/liveinst/gnome/fedora-welcome.desktop*
 mv ./pyanaconda/installclasses/fedora.py ./pyanaconda/installclasses/korora.py
 sed -i s/fedora/korora/g ./pyanaconda/installclasses/korora.py
 sed -i s/Fedora/Korora/g ./pyanaconda/installclasses/korora.py
+sed -i 's/efi_dir = "korora"/efi_dir = "fedora"/g' ./pyanaconda/installclasses/korora.py
 
 cp -f %{SOURCE1} data/liveinst/gnome/
 %%KP_PATCHES_APPLY%%
