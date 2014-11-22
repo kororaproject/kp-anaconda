@@ -5,14 +5,15 @@
 # v22.10
 #%define commit 016c0220138bf814910afddc72099142
 # v21.48.13
-%define commit aca6ead566f42508d8b98cc22c19a4b8
+#%define commit aca6ead566f42508d8b98cc22c19a4b8
+# v21.48.15
+%define commit c2f437f9ac5f87593d7c484eee8f8673
 %define livearches %{ix86} x86_64 ppc ppc64
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 21.48.13
-Release: 13%{?dist}.1
-Epoch:   1
+Version: 21.48.15
+Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -103,7 +104,7 @@ The anaconda package is a metapackage for the Anaconda installer.
 Summary: Core of the Anaconda installer
 Epoch:   1
 Requires: dnf >= %{dnfver}
-Requires: python-blivet >= 1:0.61.5
+Requires: python-blivet >= 1:0.61.9
 Requires: python-meh >= %{mehver}
 Requires: libreport-anaconda >= 2.0.21-1
 Requires: libselinux-python
@@ -341,6 +342,47 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Tue Nov 18 2014 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 21.48.15-1
+- do not delete liveimg --url=file:/// file (gczarcinski)
+- Provide useful hints on TTY1 during the installation (mkolman)
+- Fix typo from commit 9b3259874. (#1120964) (dlehman)
+- Remove the old custom partitioning help dialog (mkolman)
+- Check if we read something when emptying stdin queue (vpodzime)
+- Require min entropy for 'part --encrypted' devices (#1162695) (vpodzime)
+- Don't rely on terminal attributes being configurable (#1162702) (vpodzime)
+- Disable payloads that failed to setup (#1162732) (dshea)
+- Don't change langpacks config of installer environment (#1066017) (rvykydal)
+
+* Tue Nov 11 2014 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 21.48.14-1
+- Add support for doing a liveimg kickstart with local file (#1140358) (bcl)
+- Add a placeholder for a product-specific logo (dshea)
+- Load a stylesheet from product.img (dshea)
+- Fix make distcheck (mkolman)
+- Include help content in the Anaconda tarball (mkolman)
+- Fix typo causing traceback when NTP is turned ON/OFF (vpodzime)
+- Unpack the callback data given to us by blivet (vpodzime)
+- Add timeout to callbacks waiting for enough entropy (#1073679) (vpodzime)
+- Prevent tb on s390x when de-selecting a DASD and doing custom part.
+  (sbueno+anaconda)
+- Revert "Revert productName repo name change (#1128474)" (bcl)
+- Update the background image paths used in Fedora. (dshea)
+- dracut/save-initramfs.sh: don't save /tmp (wwoods)
+- Add a pylint module to detect uses of interruptible system calls. (dshea)
+- Wrap interruptible system calls in a loop (#1160041) (dshea)
+- Warn users about liveinst usage of --updates (#1153550) (bcl)
+- Catch EOFError in raw_input (#1158841) (bcl)
+- Ensure we are specifying sensible target sizes for resize. (#1120964)
+  (dlehman)
+- Set the autopart fstype for boot too (#1112697) (bcl)
+- Unconditionally clear the process handle when nm-c-e exits (#1132645) (dshea)
+- Make anaconda more scrollable (#1135024) (dshea)
+- Lightly rearrange the nav_area (dshea)
+- Do not install interactive exception handler in cmdline mode (#1155979)
+  (vpodzime)
+- Wait until all spokes are setup before updating continue button (bcl)
+- Allow adding prepboot to a blank disk in custom (#1155660) (bcl)
+- Remove unused imports (vpodzime)
+
 * Tue Oct 28 2014 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 21.48.13-1
 - Fix handling of md fwraid names in kickstart bootloader command. (#1156354)
   (dlehman)
@@ -396,6 +438,7 @@ update-desktop-database &> /dev/null || :
 - Allow recursive lightbox calls (#1147337) (dshea)
 - Disable the ntp service with --nontp (#1135768) (dshea)
 - Ignore partition start if there is a biosboot partition (#1044849) (bcl)
+- Require a larger /boot (#1129629). (clumens)
 - Remove duplicates when adding new devices (#887526) (bcl)
 
 * Wed Oct 08 2014 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 21.48.9-1
