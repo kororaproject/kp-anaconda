@@ -10,7 +10,7 @@ function build_pre_init {
   fi
 }
 
-function build_pre_build {
+function build_pre_build_legacy {
   _TARBALL="${KP_NAME}-${KP_VERSION}.tar.bz2"
 
   if [ ! -f "${WORKING_PACKAGES_DIR}/${KP_NAME}/build/sources/${_TARBALL}" ]
