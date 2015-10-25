@@ -7,14 +7,18 @@
 # v23.19.5
 #%define commit 78577f83ece00062d3de6d4183274f80
 # v23.19.6
-%define commit 2b513a78747c89f53608e97096b22c7b
+#%define commit 2b513a78747c89f53608e97096b22c7b
+# v23.19.9
+#%define commit 9b1a0d289c3fa4871a3ae1c4d9c12eda
+# v23.19.10
+%define commit 03d4b336be46df720f808783b6d71da3
 %define livearches %{ix86} x86_64 ppc ppc64 ppc64le
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 23.19.6
-Release: 1%{?dist}.2
-License: GPLv2+
+Version: 23.19.10
+Release: 1%{?dist}
+License: GPLv2+ and MIT
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
 Epoch:   1
@@ -339,6 +343,23 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Thu Oct 22 2015 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 23.19.10-1
+- Do not run time_initialize for image and directory installations (#1274103)
+  (bcl)
+- Install input checks before modifying the user GUI (#1256065) (dshea)
+
+* Wed Oct 21 2015 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 23.19.9-1
+- Pass strings to blockdev.dasd_format, not a DASDDevice object. (#1273553)
+  (sbueno+anaconda)
+
+* Tue Oct 20 2015 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 23.19.8-1
+- decode package name for /etc/sysconfig/kernel (RHBZ #1261569) (awilliam)
+- Warn user before using Delete all (jkonecny)
+
+* Thu Oct 15 2015 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 23.19.7-1
+- Fix traceback when trying to create list of unformatted DASDs. (#1268764)
+  (sbueno+anaconda)
+
 * Thu Oct 08 2015 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 23.19.6-1
 - Do not override StorageChecker.errors in StorageSpoke (#1252596) (vtrefny)
 - Mangle the boot device differently for systemd (#1241704) (dshea)
@@ -418,7 +439,6 @@ update-desktop-database &> /dev/null || :
 - Prevent any changes in the StorageSpoke if just going back (vpodzime)
 - Make StorageSpoke's on_back_clicked less complicated (vpodzime)
 - Change zanata.xml to match new f23-branch name. (sbueno+anaconda)
-
 
 * Fri Aug 07 2015 Brian C. Lane <bcl@redhat.com> - 23.19-1
 - Add basic support for LVM cache creation in kickstart (vpodzime)
