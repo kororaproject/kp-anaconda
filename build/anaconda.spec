@@ -11,7 +11,9 @@
 # v23.19.9
 #%define commit 9b1a0d289c3fa4871a3ae1c4d9c12eda
 # v23.19.10
-%define commit 03d4b336be46df720f808783b6d71da3
+#%define commit 03d4b336be46df720f808783b6d71da3
+# v24.13.4
+%define commit 9d2c9adeaeda6ba3f5c1e9705b24fc6e
 %define livearches %{ix86} x86_64 ppc ppc64 ppc64le
 
 Summary: Graphical system installer
