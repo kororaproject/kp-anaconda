@@ -13,12 +13,15 @@
 # v23.19.10
 #%define commit 03d4b336be46df720f808783b6d71da3
 # v24.13.4
-%define commit 9d2c9adeaeda6ba3f5c1e9705b24fc6e
+#%define commit 9d2c9adeaeda6ba3f5c1e9705b24fc6e
+#%define livearches %{ix86} x86_64 ppc ppc64 ppc64le
+# v24.13.7
+%define commit 6d22a306e48b5c8bd3deba0a9de8c996
 %define livearches %{ix86} x86_64 ppc ppc64 ppc64le
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 24.13.4
+Version: 24.13.7
 Release: 1%{?dist}
 License: GPLv2+ and MIT
 Group:   Applications/System
@@ -41,7 +44,7 @@ Source1: install-button.png
 # Also update in AM_GNU_GETTEXT_VERSION in configure.ac
 %define gettextver 0.19.1
 %define intltoolver 0.31.2-3
-%define pykickstartver 2.20
+%define pykickstartver 2.25-3
 %define dnfver 0.6.4
 %define partedver 1.8.1
 %define pypartedver 2.5-2
@@ -355,6 +358,24 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Mon Jun 13 2016 Brian C. Lane <bcl@redhat.com> - 24.13.7-1
+- Revert "Check for mounted partitions as part of sanity_check (#1330820)"
+  (bcl)
+
+* Mon Jun 06 2016 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 24.13.6-1
+- Check for mounted partitions as part of sanity_check (#1330820) (bcl)
+- Ignore missing group packages (#1337731) (bcl)
+- Catch DNF MarkingError during group installation (#1337731) (bcl)
+- Deselect all addons correctly (#1333505) (bcl)
+
+* Fri May 13 2016 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 24.13.5-1
+- Update the required pykickstart version. (dshea)
+- Implement %%packages --excludeWeakdeps (#1331100) (james)
+- Remove detach-client from tmux.conf (#1330300) (dshea)
+- Remove the subnet label for wired devices. (#1327615) (dshea)
+- Fix how unusued network labels are hidden (#1327615) (dshea)
+- Look higher for the combobox associated with an entry (#1333530) (dshea)
+
 * Mon Apr 18 2016 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 24.13.4-1
 - Refresh metadata when updates checkbox changes (#1211907) (bcl)
 - network: handle null wireless AP SSID object (#1262556) (awilliam)
