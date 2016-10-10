@@ -21,12 +21,14 @@
 # v25.20
 #%define commit 45f9dd4433c818d371e37a6121d3f7df/
 # v25.20.1
-%define commit 6046c67670e2f560039a7907b85919f4
+#%define commit 6046c67670e2f560039a7907b85919f4
+#%define livearches %{ix86} x86_64 ppc ppc64 ppc64le
+%define commit 6634313fbaca12e00271c29e3eb8ca7a
 %define livearches %{ix86} x86_64 ppc ppc64 ppc64le
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 25.20.1
+Version: 25.20.4
 Release: 1%{?dist}
 License: GPLv2+ and MIT
 Group:   Applications/System
@@ -47,7 +49,7 @@ Source1: install-button.png
 # match the requires versions of things).
 
 %define gettextver 0.19.8
-%define pykickstartver 2.31-1
+%define pykickstartver 2.32-1
 %define dnfver 0.6.4
 %define dnfmaxver 2.0.0
 %define partedver 1.8.1
@@ -111,8 +113,8 @@ The anaconda package is a metapackage for the Anaconda installer.
 %package core
 Summary: Core of the Anaconda installer
 Epoch:   1
-Requires: python3-dnf >= %{dnfver}
-Requires: python3-blivet >= 1:2.0.2
+Requires: python3-dnf >= %{dnfver}, python3-dnf < %{dnfmaxver}
+Requires: python3-blivet >= 1:2.1.3
 Requires: python3-meh >= %{mehver}
 Requires: libreport-anaconda >= 2.0.21-1
 Requires: libselinux-python3
@@ -370,6 +372,81 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Tue Oct 04 2016 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 25.20.4-1
+- Merge pull request #817 from rvykydal/f25-devel-installation-from-live-iso-
+  to-disk-usb (rvykydal)
+- Merge pull request #813 from M4rtinK/f25-devel-no_mandatory_network_in_IS
+  (martin.kolman)
+- Skip live image on usb when checking storage for mounted partitions
+  (#1369786) (rvykydal)
+- Fix network spoke being incorrectly marked as mandatory (#1374864) (mkolman)
+- Merge pull request #812 from dwlehman/udev-cruft-removal (dlehman)
+- Merge pull request #811 from M4rtinK/f25-devel-improved_driver_disk_copying
+  (martin.kolman)
+- Improved driver disk copying (#1269915) (mkolman)
+- Merge pull request #810 from M4rtinK/f25-devel-fix_screenshot_taking
+  (martin.kolman)
+- Don't deactivate all storage in anaconda-cleanup. (#1225184) (dlehman)
+- Stop setting ANACONDA udev environment variable. (#1225184) (dlehman)
+- Fix screenshot taking logic (#1327456) (mkolman)
+- Merge pull request #807 from jkonecny12/master-add-mod-reload-dependencies
+  (jkonecny)
+- Change blank lines to pep8 for Dracut DUD test (jkonecny)
+- Tweak lambda use in Dracut test (jkonecny)
+- Add Dracut test for reloading mod dependencies (jkonecny)
+
+* Wed Sep 21 2016 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 25.20.3-1
+- Merge pull request #806 from M4rtinK/f25-devel-fix_tui_ntp_server_listing
+  (martin.kolman)
+- Fix NTP server list fetching when running in IS (#1374810) (mkolman)
+- Merge pull request #804 from rvykydal/f25-devel-cgwalters-rpmostree-fix-
+  remote (rvykydal)
+- rpmostreepayload: Clean up use of sysroot files a bit (walters)
+- rpmostreepayload: Fix remote handling to use correct sysroot (walters)
+
+* Mon Sep 19 2016 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 25.20.2-1
+- Merge pull request #801 from rvykydal/f25-devel-rhbz-1309661 (rvykydal)
+- Merge pull request #802 from rvykydal/f25-devel-rhbz-1234849 (rvykydal)
+- Merge pull request #797 from jkonecny12/f25-dev-fix-text-repo-option-checker
+  (jkonecny)
+- Merge pull request #796 from jkonecny12/f25-dev-fix-net-when-dud-unload
+  (jkonecny)
+- Merge pull request #798 from rvykydal/f25-devel-rhbz-1371188 (rvykydal)
+- network: set onboot correctly for vlan on bond device in ks (#1234849)
+  (rvykydal)
+- network: don't show ibft configured devices in UI (#1309661) (rvykydal)
+- Merge pull request #765 from rvykydal/f25-devel-port-rhel-1325134-1252879
+  (rvykydal)
+- iscsi: don't generate kickstart iscsi commands for offload devices (#1252879)
+  (rvykydal)
+- iscsi: allow installing bootloader on offload iscsi disks (qla4xxx)
+  (#1325134) (rvykydal)
+- network: adapt to changed NM ibft plugin enablement configuration (#1371188)
+  (rvykydal)
+- Merge pull request #795 from rvykydal/f25-devel-rhbz-1268792 (rvykydal)
+- Merge pull request #794 from rvykydal/f25-devel-rhbz-1321288 (rvykydal)
+- Merge pull request #793 from rvykydal/f25-devel-rhbz-1358795 (rvykydal)
+- network: don't activate bond/team devices regardless of --activate (#1358795)
+  (rvykydal)
+- Merge pull request #771 from rvykydal/f25-devel-1277975-add-network-no-
+  activate-option (rvykydal)
+- Fix traceback when payload have None as url (#1371494) (jkonecny)
+- Add new Dracut test and fix another ones (#1101653) (jkonecny)
+- Fix bug when we add set to list (#1101653) (jkonecny)
+- Add new helper script files to build system (#1101653) (jkonecny)
+- Document new helper scripts to the DriverDisk README (#1101653) (jkonecny)
+- Fix driver unload is disabling network settings (#1101653) (jkonecny)
+- dud: fix multiple inst.dd=http:// instances stalling in dracut (#1268792)
+  (rvykydal)
+- network: fix ksdata generating for for non-active virtual devices (#1321288)
+  (rvykydal)
+- network: update kickstart data also with bond bridge slaves (#1321288)
+  (rvykydal)
+- network: add support for bridge bond slaves (#1321288) (rvykydal)
+- Merge pull request #790 from cgwalters/sam-evaluation (martin.kolman)
+- screen_access: Ensure we write config to real sysroot (walters)
+- network: add support for --no-activate kickstart opton (#1277975) (rvykydal)
+
 * Thu Sep 08 2016 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 25.20.1-1
 - Update zanata.xml file for f25. (sbueno+anaconda)
 - Fix a small typo in makebumpver script. (sbueno+anaconda)
