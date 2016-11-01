@@ -14,21 +14,19 @@
 #%define commit 03d4b336be46df720f808783b6d71da3
 # v24.13.4
 #%define commit 9d2c9adeaeda6ba3f5c1e9705b24fc6e
-#%define livearches %{ix86} x86_64 ppc ppc64 ppc64le
 # v24.13.7
 #%define commit 6d22a306e48b5c8bd3deba0a9de8c996
-#%define livearches %{ix86} x86_64 ppc ppc64 ppc64le
 # v25.20
 #%define commit 45f9dd4433c818d371e37a6121d3f7df/
 # v25.20.1
 #%define commit 6046c67670e2f560039a7907b85919f4
-#%define livearches %{ix86} x86_64 ppc ppc64 ppc64le
-%define commit 6634313fbaca12e00271c29e3eb8ca7a
+# v25.20.6
+%define commit afbb8889ca6223f1c6c5ae9d2f535b25
 %define livearches %{ix86} x86_64 ppc ppc64 ppc64le
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 25.20.4
+Version: 25.20.6
 Release: 1%{?dist}
 License: GPLv2+ and MIT
 Group:   Applications/System
@@ -372,6 +370,31 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Fri Oct 28 2016 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 25.20.6-1
+- Merge pull request #847 from snbueno/1384532-v02 (snbueno)
+- Merge pull request #845 from poncovka/f25-devel-tui_software_group_selection
+  (vponcova)
+- tui: Add software group selection (vponcova)
+- Merge pull request #844 from jkonecny12/f25-dev-fix-space_check_skip
+  (jkonecny)
+- Merge pull request #839 from jkonecny12/f25-dev-improve-logging (jkonecny)
+- Instantiate the zFCP object ourselves now. (#1384532) (sbueno+anaconda)
+- Fix the way DASD list is determined. (#1384532) (sbueno+anaconda)
+- Add tests for payload location picking (#1328151) (jkonecny)
+- Fix picking mountpoint for package download (#1328151) (jkonecny)
+- Merge pull request #842 from jkonecny12/f25-dev-rm-zanata-main-extra-pot
+  (jkonecny)
+- Remove main and extra pot files before zanata push (jkonecny)
+- Don't send intermediate pot files to zanata (gh#791) (awilliam)
+- Merge pull request #831 from poncovka/f25-devel-show_password_option
+  (vponcova)
+- Improve packaging logs without DEBUG logging (jkonecny)
+- Add option to show password in password field (vponcova)
+
+* Thu Oct 13 2016 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 25.20.5-1
+- Merge pull request #824 from snbueno/1378338 (snbueno)
+- Generate a list of DASDs in GUI storage spoke. (#1378338) (sbueno+anaconda)
+
 * Tue Oct 04 2016 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 25.20.4-1
 - Merge pull request #817 from rvykydal/f25-devel-installation-from-live-iso-
   to-disk-usb (rvykydal)
