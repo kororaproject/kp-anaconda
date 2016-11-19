@@ -21,12 +21,14 @@
 # v25.20.1
 #%define commit 6046c67670e2f560039a7907b85919f4
 # v25.20.6
-%define commit afbb8889ca6223f1c6c5ae9d2f535b25
+#%define commit afbb8889ca6223f1c6c5ae9d2f535b25
+#%define livearches %{ix86} x86_64 ppc ppc64 ppc64le
+%define commit 3b38b929c86b595160d9375d14f05b94
 %define livearches %{ix86} x86_64 ppc ppc64 ppc64le
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 25.20.6
+Version: 25.20.8
 Release: 1%{?dist}
 License: GPLv2+ and MIT
 Group:   Applications/System
@@ -112,7 +114,7 @@ The anaconda package is a metapackage for the Anaconda installer.
 Summary: Core of the Anaconda installer
 Epoch:   1
 Requires: python3-dnf >= %{dnfver}, python3-dnf < %{dnfmaxver}
-Requires: python3-blivet >= 1:2.1.3
+Requires: python3-blivet >= 1:2.1.6-3
 Requires: python3-meh >= %{mehver}
 Requires: libreport-anaconda >= 2.0.21-1
 Requires: libselinux-python3
@@ -370,6 +372,28 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Tue Nov 08 2016 Martin Kolman <mkolman@redhat.com> - 25.20.8-1
+- Merge pull request #863 from AdamWill/relax-blivet-dep (martin.kolman)
+- Relax blivet dependency to >= 2.1.6-3 (awilliam)
+
+* Mon Nov 07 2016 Martin Kolman <mkolman@redhat.com> - 25.20.7-1
+- Merge pull request #857 from snbueno/1335046-f25 (martin.kolman)
+- Bump required Blivet version (#1378156) (mkolman)
+- Merge pull request #862 from jkonecny12/f25-dev-fix-iscsi-timeout (jkonecny)
+- Merge pull request #850 from AdamWill/iscsi-node-auth (jkonecny)
+- Fix bad exception handling from blivet in iscsi (#1378156) (jkonecny)
+- iSCSI: adjust to change in blivet auth info (#1378156) (awilliam)
+- Add some error checking when users don't provide input for DASD devices.
+  (sbueno+anaconda)
+- Add some error checking when users don't provide input for zFCP devices.
+  (sbueno+anaconda)
+- Merge pull request #846 from jkonecny12/f25-rel-fix-mock (jkonecny)
+- Merge pull request #849 from AdamWill/iscsi-singleton (jkonecny)
+- Merge pull request #848 from AdamWill/device-links (jkonecny)
+- use blivet iSCSI singleton directly in storage spoke (awilliam)
+- Correct deviceLinks to device_links (blivet renamed it) (awilliam)
+- Change mock from Rawhide to Fedora 25 (jkonecny)
+
 * Fri Oct 28 2016 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 25.20.6-1
 - Merge pull request #847 from snbueno/1384532-v02 (snbueno)
 - Merge pull request #845 from poncovka/f25-devel-tui_software_group_selection
